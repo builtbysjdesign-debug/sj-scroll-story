@@ -1,0 +1,1143 @@
+  // 2) CSS (paste ONLY the CSS rules, no <style> tag, no "const css =")
+  const CSS = `
+/* ═══════════════════════════════════════════════════════════════════════════
+   SJ SCROLL STORY – Vertical Slides v2.4 (Optimized)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.sj-scroll-story {
+  /* ── Design Tokens ── */
+  --sj-teal-dark: #183944;
+  --sj-teal-mid: #18454D;
+  --sj-white: #FFFFFF;
+  --sj-ink: #F3F1EE;
+  --sj-coral: #C97B6B;
+  --sj-bg-dark: #0a0a0f;
+  /* Single font: Manrope, 2 weights (500, 700) */
+  --sj-font: "Manrope", system-ui, sans-serif;
+  --sj-ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+  
+  /* ── Glass ── */
+  --sj-glass-blur: 9px;
+  --sj-glass-fill: rgba(24, 57, 68, 0.55);
+  --sj-glass-border: rgba(255, 255, 255, 0.12);
+  --sj-glass-border-hover: rgba(255, 255, 255, 0.25);
+  --sj-glass-inner: rgba(255, 255, 255, 0.06);
+  
+  /* ── Grid Pattern ── */
+  --sj-grid-size: 24px;
+  --sj-grid-dot: rgba(255, 255, 255, 0.15);
+  --sj-grid-dot-glow: rgba(255, 255, 255, 0.5);
+  
+  /* ── Container ── */
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100dvh;
+  margin-left: calc(-50vw + 50%);
+  overflow: hidden;
+  background: var(--sj-bg-dark);
+  font-family: var(--sj-font);
+  -webkit-font-smoothing: antialiased;
+  contain: layout style;
+}
+
+.sj-scroll-story * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.sj-scroll-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+/* ── Base Panel ── */
+.sj-panel {
+  position: relative;
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── Animations (GPU-accelerated, deferred until .sj-ready) ── */
+.sj-anim-item {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+/* Transitions only enabled after first paint */
+.sj-scroll-story.sj-ready .sj-anim-item {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.sj-scroll-story.sj-ready .sj-anim-item[data-delay="1"] { transition-delay: 0.08s; }
+.sj-scroll-story.sj-ready .sj-anim-item[data-delay="2"] { transition-delay: 0.16s; }
+.sj-scroll-story.sj-ready .sj-anim-item[data-delay="3"] { transition-delay: 0.24s; }
+.sj-panel.is-visible .sj-anim-item { opacity: 1; transform: translate3d(0, 0, 0); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PANEL 1: About Us Section
+   ═══════════════════════════════════════════════════════════════════════════ */
+.sj-panel-about {
+  background: #fafafa;
+  padding: clamp(3rem, 8vw, 6rem) clamp(2rem, 6vw, 5rem);
+}
+
+.sj-about-container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.sj-about-heading {
+  font-family: var(--sj-font);
+  font-size: clamp(2rem, 4vw, 2.7rem);
+  font-weight: 500;
+  color: #1a1a2e;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.sj-about-layout {
+  display: grid;
+  grid-template-columns: minmax(350px, 550px) 1fr;
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: center;
+}
+
+.sj-about-content { text-align: left; }
+
+.sj-about-intro {
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  color: #5a5a72;
+  line-height: 1.6;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+.sj-about-intro:last-of-type {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.sj-about-intro strong { font-weight: 700; color: #1a1a2e; }
+
+/* ── About Button (upward fill animation, transitions deferred) ── */
+.sj-about-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.1rem 2.5rem;
+  font-family: var(--sj-font);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sj-white);
+  background: var(--sj-teal-dark);
+  border: 2px solid var(--sj-teal-dark);
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 1;
+}
+.sj-about-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--sj-white);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  z-index: -1;
+}
+/* Transitions only after ready */
+.sj-scroll-story.sj-ready .sj-about-btn {
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.sj-scroll-story.sj-ready .sj-about-btn::before {
+  transition: transform 0.3s ease;
+}
+.sj-about-btn:hover {
+  color: var(--sj-teal-dark);
+}
+.sj-about-btn:hover::before {
+  transform: scaleY(1);
+  transform-origin: bottom;
+}
+
+/* ── Team Photos ── */
+.sj-about-photos {
+  display: flex;
+  justify-content: center;
+  gap: clamp(2.5rem, 6vw, 5rem);
+}
+
+.sj-photo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.sj-photo-card.sj-anim-item { transform: translate3d(0, 20px, 0) scale3d(0.97, 0.97, 1); }
+.sj-panel.is-visible .sj-photo-card.sj-anim-item { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+
+.sj-photo-frame {
+  width: clamp(280px, 28vw, 400px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #d0d0d0;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.sj-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+}
+
+/* Hover effects - desktop only, transitions deferred */
+@media (min-width: 1025px) {
+  .sj-scroll-story.sj-ready .sj-photo-frame { transition: box-shadow 0.3s ease; }
+  .sj-photo-card:hover .sj-photo-frame { box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18); }
+  .sj-scroll-story.sj-ready .sj-photo-img { transition: filter 0.4s ease; }
+  .sj-photo-card:hover .sj-photo-img { filter: grayscale(0%); }
+}
+
+/* Mobile: no grayscale filter (GPU intensive) */
+@media (max-width: 1024px) {
+  .sj-photo-img { filter: none; }
+}
+
+/* Name tags - BIGGER, TOP CORNER, THINNER */
+.sj-photo-name {
+  position: absolute;
+  top: 4%;
+  left: 4%;
+  font-family: var(--sj-font);
+  font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+  font-weight: 500;
+  color: var(--sj-white);
+  background: var(--sj-coral);
+  padding: 0.12em 0.4em;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PANEL 2: Liverpool (Video Background)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.sj-panel-liverpool { background: #000; }
+
+.sj-panel-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.sj-panel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+/* Transitions only after ready */
+.sj-scroll-story.sj-ready .sj-panel-video { transition: opacity 0.4s ease; }
+
+/* Poster fallback (fade out when video is ready) */
+.sj-panel-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--sj-video-poster);
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  pointer-events: none;
+}
+.sj-scroll-story.sj-ready .sj-panel-bg::before { transition: opacity 0.4s ease; }
+.sj-panel-bg.is-video-ready::before { opacity: 0; }
+.sj-panel-bg.is-video-ready .sj-panel-video { opacity: 1; }
+
+/* Video zoom - desktop only, transitions deferred */
+@media (min-width: 1025px) {
+  .sj-panel-video {
+    transform: scale3d(1, 1, 1);
+  }
+  .sj-scroll-story.sj-ready .sj-panel-video {
+    transition: transform 10s var(--sj-ease-silk);
+  }
+  .sj-panel-liverpool.is-visible .sj-panel-video { transform: scale3d(1.06, 1.06, 1); }
+}
+
+.sj-panel-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(24, 57, 68, 0.5), rgba(24, 69, 77, 0.4));
+  pointer-events: none;
+}
+
+/* Dotted grid on video - desktop only */
+@media (min-width: 1025px) {
+  .sj-panel-overlay {
+    background: 
+      radial-gradient(circle, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+      linear-gradient(135deg, rgba(24, 57, 68, 0.45), rgba(24, 69, 77, 0.35));
+    background-size: 24px 24px, 100% 100%;
+  }
+}
+
+.sj-panel-liverpool .sj-panel-inner {
+  position: absolute;
+  top: clamp(3rem, 8vw, 6rem);
+  left: clamp(2rem, 6vw, 5rem);
+  z-index: 2;
+  max-width: 520px;
+  padding: 0;
+  justify-content: flex-start;
+}
+
+.sj-panel-liverpool .sj-panel-btn {
+  margin-top: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PANEL 3: Dark Panel with Animated Dotted Grid Pattern
+   ═══════════════════════════════════════════════════════════════════════════ */
+.sj-panel-dark {
+  background: linear-gradient(135deg, var(--sj-teal-dark), var(--sj-bg-dark));
+  overflow: hidden;
+}
+
+/* Grid - desktop only */
+@media (min-width: 1025px) {
+  .sj-panel-dark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, var(--sj-grid-dot) 1px, transparent 1px);
+    background-size: var(--sj-grid-size) var(--sj-grid-size);
+    pointer-events: none;
+  }
+}
+
+/* Cursor-following highlighted grid dots - DESKTOP ONLY */
+.sj-grid-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, var(--sj-grid-dot-glow) 1px, transparent 1px);
+  background-size: var(--sj-grid-size) var(--sj-grid-size);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  -webkit-mask: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), black, transparent);
+  mask: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), black, transparent);
+}
+/* Transitions only after ready */
+.sj-scroll-story.sj-ready .sj-grid-glow {
+  transition: opacity 0.4s ease;
+}
+.sj-panel-dark:hover .sj-grid-glow {
+  opacity: 1;
+}
+
+/* Mobile: hide grid glow (no hover on touch) */
+@media (max-width: 1024px) {
+  .sj-grid-glow {
+    display: none;
+  }
+}
+
+/* Mobile-only dotted grid behind cards */
+@media (max-width: 1024px) {
+  .sj-panel-dark::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 26px 26px;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLASS CARD (Square - no border-radius)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.sj-glass-card {
+  position: relative;
+  max-width: 520px;
+  width: 100%;
+  padding: clamp(2rem, 5vw, 3rem) clamp(2rem, 5vw, 3.5rem);
+  background: var(--sj-glass-fill);
+  border: 1px solid var(--sj-glass-border);
+  border-radius: 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  text-align: left;
+  
+  /* Expand animation - GPU accelerated, transitions deferred */
+  opacity: 0;
+  transform: scale3d(0.94, 0.94, 1);
+}
+/* Transitions only after ready */
+.sj-scroll-story.sj-ready .sj-glass-card {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Backdrop blur - desktop only (expensive on mobile) */
+@media (min-width: 1025px) {
+  .sj-glass-card {
+    backdrop-filter: blur(var(--sj-glass-blur));
+    -webkit-backdrop-filter: blur(var(--sj-glass-blur));
+  }
+}
+
+/* Mobile: solid background, no blur */
+@media (max-width: 1024px) {
+  .sj-glass-card {
+    background: rgba(24, 57, 68, 0.92);
+  }
+}
+
+.sj-panel.is-visible .sj-glass-card {
+  opacity: 1;
+  transform: scale3d(1, 1, 1);
+  border-color: var(--sj-glass-border-hover);
+}
+
+/* Glass corners */
+.sj-glass-corner {
+  position: absolute;
+  font-size: 0.65rem;
+  font-weight: 500;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0);
+  pointer-events: none;
+}
+/* Transitions only after ready */
+.sj-scroll-story.sj-ready .sj-glass-corner {
+  transition: color 0.4s ease 0.15s;
+}
+.sj-glass-corner--tl { top: 12px; left: 14px; }
+.sj-glass-corner--tr { top: 12px; right: 14px; }
+.sj-glass-corner--bl { bottom: 12px; left: 14px; }
+.sj-glass-corner--br { bottom: 12px; right: 14px; }
+.sj-panel.is-visible .sj-glass-corner { color: rgba(255, 255, 255, 0.45); }
+
+/* Bold text in panels */
+.sj-panel-body strong,
+.sj-panel-subheading strong {
+  font-weight: 600;
+  color: var(--sj-white);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PANEL CONTENT
+   ═══════════════════════════════════════════════════════════════════════════ */
+.sj-panel-inner {
+  max-width: 600px;
+  width: 100%;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sj-panel-dark .sj-panel-inner {
+  max-width: 1200px;
+  position: relative;
+  z-index: 2;
+}
+
+.sj-panel-cards {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  width: 100%;
+}
+
+.sj-panel-cards .sj-glass-card {
+  flex: 1 1 520px;
+  max-width: 520px;
+}
+
+.sj-glass-card--image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 2rem);
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+
+.sj-card-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 90%;
+  max-height: clamp(140px, 16vw, 220px);
+  object-fit: contain;
+}
+
+.sj-glass-card--image .sj-panel-btn {
+  margin-top: 0;
+}
+
+.sj-panel-heading {
+  font-family: var(--sj-font);
+  font-size: clamp(1.5rem, 2.5vw, 1.8rem);
+  font-weight: 500;
+  color: var(--sj-white);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.sj-panel-subheading {
+  font-family: var(--sj-font);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  font-weight: 500;
+  color: rgba(243, 241, 238, 0.7);
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+}
+
+.sj-panel-body {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  color: rgba(243, 241, 238, 0.85);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+.sj-inline-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.sj-panel .sj-inline-link {
+  color: var(--sj-white);
+}
+.sj-panel .sj-inline-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+.sj-panel-about .sj-inline-link {
+  color: var(--sj-teal-dark);
+}
+.sj-panel-about .sj-inline-link:hover {
+  color: #0f2d35;
+}
+
+.sj-panel-body + .sj-panel-btn {
+  margin-top: 0.75rem;
+}
+
+/* ── Panel Button (upward fill animation, transitions deferred) ── */
+.sj-panel-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  font-family: var(--sj-font);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sj-white);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 1;
+}
+.sj-panel-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.14);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  z-index: -1;
+}
+/* Transitions only after ready */
+.sj-scroll-story.sj-ready .sj-panel-btn {
+  transition: border-color 0.2s ease;
+}
+.sj-scroll-story.sj-ready .sj-panel-btn::before {
+  transition: transform 0.25s ease;
+}
+.sj-panel-btn:hover { border-color: rgba(255, 255, 255, 0.5); }
+.sj-panel-btn:hover::before { transform: scaleY(1); transform-origin: bottom; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROGRESS NAV (RENAMED from sj-nav to avoid conflict with site nav)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.sj-progress-nav {
+  position: absolute;
+  top: clamp(1.5rem, 4vw, 2.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 20;
+}
+
+.sj-progress-labels { display: flex; align-items: center; gap: 8px; }
+
+.sj-progress-label {
+  font-family: var(--sj-font);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  padding: 6px 12px;
+  border-radius: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+/* Transitions only after ready */
+.sj-scroll-story.sj-ready .sj-progress-label {
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.sj-progress-label:hover { color: rgba(255, 255, 255, 0.6); }
+.sj-progress-label.is-active { color: var(--sj-white); background: rgba(255, 255, 255, 0.1); }
+
+.sj-progress-dot { width: 3px; height: 3px; border-radius: 0; background: rgba(255, 255, 255, 0.25); }
+
+.sj-progress-track {
+  width: min(200px, 45vw);
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.sj-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--sj-white);
+  border-radius: 0;
+}
+/* Transitions only after ready */
+.sj-scroll-story.sj-ready .sj-progress-bar {
+  transition: width 0.1s ease;
+}
+
+/* Light panel progress styling */
+.sj-scroll-story[data-active-panel="0"] .sj-progress-label { color: rgba(0, 0, 0, 0.35); }
+.sj-scroll-story[data-active-panel="0"] .sj-progress-label:hover { color: rgba(0, 0, 0, 0.6); }
+.sj-scroll-story[data-active-panel="0"] .sj-progress-label.is-active { color: var(--sj-teal-dark); background: rgba(0, 0, 0, 0.06); }
+.sj-scroll-story[data-active-panel="0"] .sj-progress-dot { background: rgba(0, 0, 0, 0.2); }
+.sj-scroll-story[data-active-panel="0"] .sj-progress-track { background: rgba(0, 0, 0, 0.1); }
+.sj-scroll-story[data-active-panel="0"] .sj-progress-bar { background: var(--sj-teal-dark); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1366px) {
+  .sj-about-layout {
+    grid-template-columns: minmax(300px, 420px) 1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+  .sj-about-photos { gap: clamp(1.5rem, 3vw, 3rem); }
+  .sj-photo-frame { width: clamp(210px, 22vw, 320px); }
+}
+
+@media (max-width: 1024px) {
+  .sj-about-layout { grid-template-columns: 1fr; gap: clamp(2rem, 5vw, 3rem); }
+  .sj-about-content { text-align: center; order: 2; }
+  .sj-about-photos { order: 1; }
+  .sj-about-heading { text-align: center; }
+  .sj-panel-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .sj-panel-cards .sj-glass-card {
+    max-width: 560px;
+    width: 100%;
+  }
+  .sj-panel-liverpool .sj-panel-inner {
+    position: relative;
+    top: auto;
+    left: auto;
+    max-width: 520px;
+    padding: 0 2rem;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .sj-panel-about { padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2rem); }
+  .sj-photo-frame { width: clamp(180px, 40vw, 280px); }
+  .sj-photo-name { font-size: clamp(1.2rem, 5vw, 1.8rem); padding: 0.1em 0.35em; top: 3%; left: 3%; }
+  .sj-about-photos { gap: clamp(1.5rem, 4vw, 2.5rem); }
+  .sj-glass-card { padding: clamp(1.5rem, 5vw, 2rem) clamp(1.25rem, 4vw, 1.75rem); text-align: center; }
+  .sj-progress-nav { top: 1rem; }
+  .sj-progress-label { font-size: 0.6rem; padding: 5px 8px; }
+  .sj-progress-labels { gap: 4px; }
+  .sj-about-heading { font-size: clamp(1.6rem, 5vw, 2.2rem); }
+  .sj-about-intro { font-size: clamp(1rem, 3.5vw, 1.2rem); }
+}
+
+@media (max-width: 480px) {
+  .sj-photo-frame { width: 150px; }
+  .sj-photo-name { font-size: 1rem; top: 2%; left: 2%; }
+  .sj-about-btn { padding: 1rem 1.75rem; font-size: 0.75rem; }
+  .sj-progress-labels { display: none; }
+}
+
+/* Reduced motion + mobile performance */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { 
+    animation: none !important; 
+    transition: none !important; 
+  }
+  .sj-anim-item, .sj-glass-card, .sj-photo-card.sj-anim-item { 
+    opacity: 1 !important; 
+    transform: none !important; 
+  }
+  .sj-glass-corner { color: rgba(255, 255, 255, 0.45) !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE: Simple vertical layout - no scroll hijacking
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .sj-scroll-story {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+  
+  .sj-scroll-track {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+    will-change: auto;
+  }
+  
+  .sj-panel {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .sj-panel-about {
+    min-height: auto;
+    padding: 3rem 1.5rem;
+  }
+  
+  .sj-panel-liverpool {
+    min-height: 90vh;
+    padding-block: clamp(1rem, 4vw, 2rem);
+  }
+  
+  .sj-panel-dark {
+    min-height: 90vh;
+  }
+
+  .sj-panel-inner {
+    padding: clamp(2.5rem, 8vw, 4rem) 1.5rem;
+  }
+  
+  /* Simple fade-in on mobile using CSS only */
+  .sj-anim-item,
+  .sj-glass-card,
+  .sj-photo-card.sj-anim-item {
+    opacity: 0;
+    transform: none;
+    animation: mobileFadeIn 0.6s ease forwards;
+  }
+  
+  .sj-anim-item[data-delay="1"] { animation-delay: 0.1s; }
+  .sj-anim-item[data-delay="2"] { animation-delay: 0.2s; }
+  
+  .sj-glass-card {
+    animation-delay: 0.15s;
+  }
+  
+  .sj-glass-corner {
+    color: rgba(255, 255, 255, 0.45);
+  }
+  
+  @keyframes mobileFadeIn {
+    to { opacity: 1; }
+  }
+  
+  /* Hide progress nav on mobile */
+  .sj-progress-nav {
+    display: none;
+  }
+  
+  /* Liverpool card - center on mobile */
+  .sj-panel-liverpool .sj-panel-inner {
+    position: relative;
+    top: auto;
+    left: auto;
+    padding: clamp(2.5rem, 8vw, 4rem) 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+  `.trim();
+
+  // 3) Find hooks + inject HTML
+  const hooks = document.querySelectorAll('[data-sj-side-scroll]');
+  if (!hooks.length) return;
+
+  const stories = [];
+  hooks.forEach((hook) => {
+    const targetSelector = hook.getAttribute('data-sj-target');
+    const mount = targetSelector ? document.querySelector(targetSelector) : hook;
+    if (!mount) return;
+
+    const existingStory = mount.querySelector('.sj-scroll-story');
+    if (existingStory) {
+      stories.push(existingStory);
+      return;
+    }
+
+    const wrap = document.createElement("div");
+    wrap.innerHTML = HTML;
+    const story = wrap.firstElementChild;
+    if (!story) return;
+    mount.appendChild(story);
+    stories.push(story);
+  });
+
+  if (!stories.length) return;
+
+  // 4) Inject CSS (once)
+  if (!document.querySelector('style[data-sj="scroll-story"]')) {
+    const styleEl = document.createElement("style");
+    styleEl.setAttribute("data-sj", "scroll-story");
+    styleEl.textContent = CSS;
+    document.head.appendChild(styleEl);
+  }
+
+  // 5) Run your logic (paste ONLY your JS code body here)
+  (function (stories) {
+    // ══════════════════════════════════════════════════════════════════════════
+    // LIGHTHOUSE OPTIMIZED: No JS runs on load, all deferred
+    // ══════════════════════════════════════════════════════════════════════════
+    
+    const initStory = (c) => {
+      if (!c) return;
+
+      const mediaMobile = window.matchMedia('(max-width: 1024px)');
+      const mediaReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const useSimpleLayout = () => mediaMobile.matches || mediaReduced.matches;
+      
+      // Phase 1: Enable CSS transitions (after first paint)
+      const enableAnimations = () => {
+        c.classList.add('sj-ready');
+      };
+      
+      // Phase 2: Full interactivity (on scroll OR after delay)
+      let initialized = false;
+      
+      const initVideoSimple = () => {
+        const liverpoolVideo = c.querySelector('.sj-panel-video');
+        const liverpoolPanel = c.querySelector('.sj-panel-liverpool');
+        const liverpoolBg = c.querySelector('.sj-panel-bg');
+        if (!liverpoolVideo || !liverpoolPanel || !liverpoolBg) return;
+
+        const markReady = () => { liverpoolBg.classList.add('is-video-ready'); };
+        liverpoolVideo.addEventListener('loadeddata', markReady, { once: true });
+        liverpoolVideo.addEventListener('error', () => { liverpoolBg.classList.remove('is-video-ready'); });
+
+        let loaded = false;
+        const loadAndPlay = () => {
+          if (!loaded) {
+            loaded = true;
+            liverpoolVideo.load();
+          }
+          const p = liverpoolVideo.play();
+          if (p && p.catch) p.catch(() => {});
+        };
+        const pause = () => {
+          if (!liverpoolVideo.paused) liverpoolVideo.pause();
+        };
+
+        if ('IntersectionObserver' in window) {
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) loadAndPlay();
+              else pause();
+            });
+          }, { threshold: 0.35 });
+          io.observe(liverpoolPanel);
+        } else {
+          const check = () => {
+            const rect = liverpoolPanel.getBoundingClientRect();
+            const visible = rect.top < innerHeight * 0.8 && rect.bottom > innerHeight * 0.2;
+            if (visible) loadAndPlay();
+            else pause();
+          };
+          addEventListener('scroll', check, { passive: true });
+          check();
+        }
+      };
+
+      const initScrollStory = () => {
+        if (initialized) return;
+        initialized = true;
+        
+        // MOBILE: Just mark panels visible, no scroll hijacking, minimal JS
+        if (useSimpleLayout()) {
+          c.querySelectorAll('.sj-panel').forEach(p => p.classList.add('is-visible'));
+          c.dataset.activePanel = '0';
+          initVideoSimple();
+          return;
+        }
+        
+        // DESKTOP: Full scroll-hijacking
+        const track = c.querySelector('.sj-scroll-track'),
+              panels = c.querySelectorAll('.sj-panel'),
+              bar = c.querySelector('.sj-progress-bar'),
+              labelsBox = c.querySelector('.sj-progress-labels'),
+              N = panels.length;
+        
+        let maxX = 0, wTop = 0, wH = 0, active = 0, measured = false;
+
+        // Build labels (no layout reads)
+        labelsBox.innerHTML = [...panels].map((p, i) => {
+          const dot = i < N - 1 ? '<span class="sj-progress-dot"></span>' : '';
+          const panelId = (p.id || `panel-${i}`).replace(/[^a-zA-Z0-9_-]/g, '');
+          const isAbout = (p.dataset.label || '').toLowerCase() === 'about';
+          const labelId = isAbout ? 'about' : `sj-progress-${panelId}`;
+          return `<span class="sj-progress-label" id="${labelId}" data-i="${i}" data-panel-id="${panelId}">${p.dataset.label || i + 1}</span>${dot}`;
+        }).join('');
+
+        // Wrapper (deferred creation)
+        const w = document.createElement('div');
+        w.style.height = N * 150 + 'vh';
+        c.parentNode.insertBefore(w, c);
+        w.appendChild(c);
+
+        // Lazy measurement
+        const measure = () => {
+          if (measured) return;
+          measured = true;
+          maxX = track.scrollWidth - c.clientWidth;
+          const r = w.getBoundingClientRect();
+          wTop = r.top + scrollY;
+          wH = w.offsetHeight - innerHeight;
+        };
+
+        const getPanelIndexById = (id) => {
+          if (!id) return -1;
+          return [...panels].findIndex(p => p.id === id);
+        };
+
+        const scrollToPanel = (index, behavior = 'smooth') => {
+          if (index < 0 || index >= N) return;
+          measure();
+          const denom = Math.max(1, N - 1);
+          const t = wTop + (index / denom) * wH;
+          window.scrollTo({ top: t, behavior });
+        };
+
+        let targetX = 0, currentX = 0, animating = false;
+        
+        const updateTransform = () => {
+          if (Math.abs(targetX - currentX) > 0.5) {
+            currentX += (targetX - currentX) * 0.08;
+            track.style.transform = `translate3d(${-currentX}px,0,0)`;
+            requestAnimationFrame(updateTransform);
+          } else {
+            currentX = targetX;
+            track.style.transform = `translate3d(${-currentX}px,0,0)`;
+            animating = false;
+          }
+        };
+        
+        let checkVideo = () => {};
+
+        const onScroll = () => {
+          measure();
+          const s = Math.max(0, scrollY - wTop),
+                p = Math.min(s / wH, 1);
+          
+          targetX = p * maxX;
+          
+          if (!animating) {
+            animating = true;
+            requestAnimationFrame(updateTransform);
+          }
+          
+          bar.style.width = p * 100 + '%';
+
+          let closest = 0, minD = Infinity;
+          panels.forEach((panel, i) => {
+            const d = Math.abs((i * c.clientWidth + c.clientWidth/2) - (targetX + c.clientWidth/2)) / c.clientWidth;
+            panel.classList.toggle('is-visible', d < 0.6);
+            if (d < minD) { minD = d; closest = i; }
+          });
+
+          if (closest !== active) {
+            active = closest;
+            c.dataset.activePanel = closest;
+            labelsBox.querySelectorAll('.sj-progress-label').forEach((l, i) => l.classList.toggle('is-active', i === closest));
+          }
+
+          checkVideo();
+        };
+
+        // Label clicks
+        labelsBox.addEventListener('click', (e) => {
+          const l = e.target.closest('.sj-progress-label');
+          if (!l) return;
+          scrollToPanel(+l.dataset.i);
+        });
+
+        // Minimal init (no layout reads here)
+        panels[0].classList.add('is-visible');
+        c.dataset.activePanel = '0';
+        labelsBox.querySelector('.sj-progress-label')?.classList.add('is-active');
+
+        // Single scroll listener
+        addEventListener('scroll', onScroll, { passive: true });
+        
+        // Resize listener - only add on first resize
+        let resizeAdded = false;
+        const addResize = () => {
+          if (resizeAdded) return;
+          resizeAdded = true;
+          addEventListener('resize', () => { measured = false; onScroll(); }, { passive: true });
+        };
+        addEventListener('resize', addResize, { passive: true, once: true });
+        
+        // Initial scroll sync
+        onScroll();
+        
+        // Hash handling (deferred)
+        const handleHash = () => {
+          const hash = window.location.hash;
+          if (!hash) return;
+          let targetId = hash.replace(/^\/?#/, '');
+          const labelDirect = document.getElementById(targetId);
+          if (labelDirect) {
+            labelDirect.click();
+            return;
+          }
+          if (targetId.startsWith('sj-progress-')) {
+            const label = document.getElementById(targetId);
+            if (label) label.click();
+            return;
+          }
+          const label = document.getElementById(`sj-progress-${targetId}`);
+          if (label) {
+            label.click();
+            return;
+          }
+          const resolvedId = targetId === 'about' ? 'about-panel' : targetId;
+          const targetIndex = getPanelIndexById(resolvedId);
+          if (targetIndex === -1) return;
+          scrollToPanel(targetIndex);
+        };
+        
+        if (window.location.hash) setTimeout(handleHash, 200);
+        addEventListener('hashchange', handleHash);
+
+        // Intercept same-page anchor clicks for panels so repeated clicks always scroll
+        const handleAnchorClick = (e) => {
+          const a = e.target.closest('a[href*="#"]');
+          if (!a) return;
+          const url = new URL(a.getAttribute('href'), window.location.href);
+          if (url.origin !== window.location.origin) return;
+          const targetId = url.hash.replace('#', '');
+          if (targetId !== 'about') return;
+          const targetIndex = getPanelIndexById('about-panel');
+          if (targetIndex === -1) return;
+          const currentPath = window.location.pathname.replace(/\/+$/, '');
+          const targetPath = url.pathname.replace(/\/+$/, '');
+          const onHome = currentPath === '' || currentPath === '/home';
+          const allowedTarget = targetPath === currentPath || targetPath === '' || targetPath === '/' || targetPath === '/home';
+          if (!onHome || !allowedTarget) return;
+          e.preventDefault();
+          const label = document.getElementById('about');
+          if (label) label.click();
+          else scrollToPanel(targetIndex);
+          if (window.location.hash !== `#${targetId}`) {
+            history.pushState(null, '', `#${targetId}`);
+          }
+        };
+        document.addEventListener('click', handleAnchorClick);
+
+        // Grid glow - only add listener on hover (not on load)
+        const darkPanel = c.querySelector('.sj-panel-dark');
+        const gridGlow = c.querySelector('.sj-grid-glow');
+        if (darkPanel && gridGlow) {
+          darkPanel.addEventListener('mouseenter', () => {
+            darkPanel.addEventListener('mousemove', (e) => {
+              const rect = darkPanel.getBoundingClientRect();
+              gridGlow.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+              gridGlow.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+            }, { passive: true });
+          }, { once: true });
+        }
+
+        // Video: simple class-based control (no observers on load)
+        const liverpoolVideo = c.querySelector('.sj-panel-video');
+        const liverpoolPanel = c.querySelector('.sj-panel-liverpool');
+        const liverpoolBg = c.querySelector('.sj-panel-bg');
+        
+        if (liverpoolVideo && liverpoolPanel && liverpoolBg) {
+          let videoLoaded = false, videoPlaying = false;
+          
+          const markReady = () => { liverpoolBg.classList.add('is-video-ready'); };
+          liverpoolVideo.addEventListener('loadeddata', markReady, { once: true });
+          liverpoolVideo.addEventListener('error', () => { liverpoolBg.classList.remove('is-video-ready'); });
+
+          checkVideo = () => {
+            const visible = liverpoolPanel.classList.contains('is-visible');
+            if (visible && !videoLoaded) {
+              videoLoaded = true;
+              liverpoolVideo.load();
+            }
+            if (visible && videoLoaded && !videoPlaying) {
+              liverpoolVideo.play().then(() => { videoPlaying = true; }).catch(() => {});
+            }
+            if (!visible && videoPlaying) {
+              liverpoolVideo.pause();
+              videoPlaying = false;
+            }
+          };
+        }
+      };
+      
+      // ── Schedule: animations after paint, interactivity on scroll ──
+      requestAnimationFrame(() => {
+        requestAnimationFrame(enableAnimations);
+      });
+      
+      // Initialize on first scroll OR after 3s delay
+      const initOnScroll = () => {
+        removeEventListener('scroll', initOnScroll, { passive: true });
+        initScrollStory();
+      };
+      addEventListener('scroll', initOnScroll, { passive: true });
+      setTimeout(initScrollStory, 3000);
+    };
+
+    stories.forEach(initStory);
+  })(stories);
+})();
